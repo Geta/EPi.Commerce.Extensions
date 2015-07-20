@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using EPiServer;
 using EPiServer.Commerce.Catalog;
 using EPiServer.Commerce.Catalog.ContentTypes;
+using EPiServer.Core;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
 
@@ -9,28 +12,50 @@ namespace Geta.EPi.Commerce.Extensions.Cart
 {
     public static class AssetContainerExtensions
     {
-#pragma warning disable 649
         private static Injected<AssetUrlResolver> _assetUrlResolver;
         private static Injected<UrlResolver> _urlResolver;
-#pragma warning restore 649
 
-        public static string GetDefaultAsset(this IAssetContainer assetContainer)
+        public static string GetDefaultAsset<TContentMedia>(this IAssetContainer assetContainer) where TContentMedia : IContentMedia
         {
-            return _assetUrlResolver.Service.GetAssetUrl(assetContainer);
+            var url = _assetUrlResolver.Service.GetAssetUrl<TContentMedia>(assetContainer);
+            Uri uri;
+            if (Uri.TryCreate(url, UriKind.Absolute, out uri))
+            {
+                return uri.PathAndQuery;
+            }
+            return url;
         }
 
-        public static IEnumerable<string> GetAssets(this IAssetContainer assetContainer)
+        public static IList<string> GetAssets<TContentMedia>(this IAssetContainer assetContainer, IContentLoader contentLoader) where TContentMedia : IContentMedia
         {
             var assets = new List<string>();
             if (assetContainer.CommerceMediaCollection != null)
             {
-                assets.AddRange(assetContainer.CommerceMediaCollection.Select(media => _urlResolver.Service.GetUrl(media.AssetLink)));
+                assets.AddRange(assetContainer.CommerceMediaCollection.Where(x => ValidateCorrectType<TContentMedia>(x.AssetLink, contentLoader)).Select(media => _urlResolver.Service.GetUrl(media.AssetLink)));
             }
+
             if (!assets.Any())
             {
                 assets.Add(string.Empty);
             }
+
             return assets;
+        }
+
+        private static bool ValidateCorrectType<TContentMedia>(ContentReference contentLink, IContentLoader contentLoader) where TContentMedia : IContentMedia
+        {
+            if (typeof(TContentMedia) == typeof(IContentMedia))
+            {
+                return true;
+            }
+
+            if (ContentReference.IsNullOrEmpty(contentLink))
+            {
+                return false;
+            }
+
+            TContentMedia content;
+            return contentLoader.TryGet(contentLink, out content);
         }
     }
 }
