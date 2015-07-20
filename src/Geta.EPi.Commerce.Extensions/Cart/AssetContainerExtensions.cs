@@ -14,6 +14,7 @@ namespace Geta.EPi.Commerce.Extensions.Cart
     {
         private static Injected<AssetUrlResolver> _assetUrlResolver;
         private static Injected<UrlResolver> _urlResolver;
+        private static Injected<IContentLoader> _contentLoader;
 
         public static string GetDefaultAsset<TContentMedia>(this IAssetContainer assetContainer) where TContentMedia : IContentMedia
         {
@@ -26,12 +27,12 @@ namespace Geta.EPi.Commerce.Extensions.Cart
             return url;
         }
 
-        public static IList<string> GetAssets<TContentMedia>(this IAssetContainer assetContainer, IContentLoader contentLoader) where TContentMedia : IContentMedia
+        public static IList<string> GetAssets<TContentMedia>(this IAssetContainer assetContainer) where TContentMedia : IContentMedia
         {
             var assets = new List<string>();
             if (assetContainer.CommerceMediaCollection != null)
             {
-                assets.AddRange(assetContainer.CommerceMediaCollection.Where(x => ValidateCorrectType<TContentMedia>(x.AssetLink, contentLoader)).Select(media => _urlResolver.Service.GetUrl(media.AssetLink)));
+                assets.AddRange(assetContainer.CommerceMediaCollection.Where(x => ValidateCorrectType<TContentMedia>(x.AssetLink)).Select(media => _urlResolver.Service.GetUrl(media.AssetLink)));
             }
 
             if (!assets.Any())
@@ -42,7 +43,7 @@ namespace Geta.EPi.Commerce.Extensions.Cart
             return assets;
         }
 
-        private static bool ValidateCorrectType<TContentMedia>(ContentReference contentLink, IContentLoader contentLoader) where TContentMedia : IContentMedia
+        private static bool ValidateCorrectType<TContentMedia>(ContentReference contentLink) where TContentMedia : IContentMedia
         {
             if (typeof(TContentMedia) == typeof(IContentMedia))
             {
@@ -55,7 +56,7 @@ namespace Geta.EPi.Commerce.Extensions.Cart
             }
 
             TContentMedia content;
-            return contentLoader.TryGet(contentLink, out content);
+            return _contentLoader.Service.TryGet(contentLink, out content);
         }
     }
 }
