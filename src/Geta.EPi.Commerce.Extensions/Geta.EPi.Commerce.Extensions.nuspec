@@ -9,6 +9,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <tags>Geta Foundation Commerce</tags>
-    <iconUrl>http://cdn.geta.no/opensource/icons/library-icon-32x32.png</iconUrl>
+    <iconUrl>http://cdn.geta.no/opensource/icons/geta-epi-icon.png</iconUrl>
   </metadata>
 </package>
