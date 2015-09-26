@@ -276,17 +276,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cart\AssetContainerExtensions.cs" />
-    <Compile Include="Cart\CartExtensions.cs" />
-    <Compile Include="Cart\CartFactory.cs" />
-    <Compile Include="Cart\CartManager.cs" />
-    <Compile Include="Cart\CartWorkflow.cs" />
-    <Compile Include="Cart\LineItemExtensions.cs" />
-    <Compile Include="Cart\VariationContentExtensions.cs" />
-    <Compile Include="Entry\EntryExtensions.cs" />
-    <Compile Include="Order\OrderFormExtensions.cs" />
-    <Compile Include="Order\OrderGroupExtensions.cs" />
-    <Compile Include="Order\OrderManager.cs" />
+    <Compile Include="AssetContainerExtensions.cs" />
+    <Compile Include="LineItemExtensions.cs" />
+    <Compile Include="OrderGroupExtensions.cs" />
+    <Compile Include="VariationContentExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

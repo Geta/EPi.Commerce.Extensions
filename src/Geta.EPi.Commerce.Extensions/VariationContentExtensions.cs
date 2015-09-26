@@ -5,7 +5,7 @@ using EPiServer.Commerce.Catalog.Linking;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
 
-namespace Geta.EPi.Commerce.Extensions.Cart
+namespace Geta.EPi.Commerce.Extensions
 {
     public static class VariationContentExtensions
     {

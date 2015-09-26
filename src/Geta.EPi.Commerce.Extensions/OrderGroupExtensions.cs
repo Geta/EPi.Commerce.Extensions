@@ -1,7 +1,7 @@
 ﻿using Mediachase.Commerce;
 using Mediachase.Commerce.Orders;
 
-namespace Geta.EPi.Commerce.Extensions.Order
+namespace Geta.EPi.Commerce.Extensions
 {
     public static class OrderGroupExtensions
     {

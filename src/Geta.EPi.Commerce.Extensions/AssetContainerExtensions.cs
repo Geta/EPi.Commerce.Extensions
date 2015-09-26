@@ -8,7 +8,7 @@ using EPiServer.Core;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
 
-namespace Geta.EPi.Commerce.Extensions.Cart
+namespace Geta.EPi.Commerce.Extensions
 {
     public static class AssetContainerExtensions
     {
