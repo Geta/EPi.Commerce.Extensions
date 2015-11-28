@@ -5,7 +5,7 @@
     <version>$version$</version>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <projectUrl>https://github.com/Geta/EPi.Commerce</projectUrl>
+    <projectUrl>https://github.com/Geta/EPi.Commerce.Extensions</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <tags>Geta Foundation Commerce</tags>
