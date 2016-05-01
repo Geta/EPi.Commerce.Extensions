@@ -1,5 +1,7 @@
 # Geta.EPi.Commerce.Extensions
 
+![](http://tc.geta.no/app/rest/builds/buildType:(id:TeamFrederik_EPiCommerceExtensions_ExtensionsDebug)/statusIcon)
+
 ```
 Install-Package Geta.EPi.Commerce.Extensions
 ```
