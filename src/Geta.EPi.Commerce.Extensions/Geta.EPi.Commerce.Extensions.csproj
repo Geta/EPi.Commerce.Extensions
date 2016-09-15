@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -277,8 +278,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssetContainerExtensions.cs" />
+    <Compile Include="BundleContentExtensions.cs" />
     <Compile Include="LineItemExtensions.cs" />
     <Compile Include="OrderGroupExtensions.cs" />
+    <Compile Include="PackageContentExtensions.cs" />
+    <Compile Include="ProductContentExtensions.cs" />
     <Compile Include="VariationContentExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
