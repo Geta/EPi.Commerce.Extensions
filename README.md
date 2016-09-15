@@ -60,6 +60,19 @@ IEnumerable<ContentReference> GetPackageEntries(this PackageContent packageConte
 IEnumerable<ContentReference> GetPackageEntries(this PackageContent packageContent, ILinksRepository linksRepository);
 ```
 
+### Price detail service
+```csharp
+SaveMsrp(this IPriceDetailService priceDetailService, ContentReference contentLink, MarketId marketId, Currency currency, decimal amount);
+```
+
+### Price service
+```csharp
+IPriceValue LoadMsrp(this IPriceService priceService, ContentReference contentLink, MarketId marketId, Currency currency);
+
+// Example usage: Was 1000 now only 800
+IPriceValue GetPreviousPrice(this IPriceService priceService, ContentReference contentLink, MarketId marketId, Currency currency);
+```
+
 ### Product content
 
 ```csharp

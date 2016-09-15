@@ -284,6 +284,8 @@
     <Compile Include="NodeContentExtensions.cs" />
     <Compile Include="OrderGroupExtensions.cs" />
     <Compile Include="PackageContentExtensions.cs" />
+    <Compile Include="PriceDetailServiceExtensions.cs" />
+    <Compile Include="PriceServiceExtensions.cs" />
     <Compile Include="ProductContentExtensions.cs" />
     <Compile Include="VariationContentExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
