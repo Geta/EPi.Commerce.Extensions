@@ -54,5 +54,26 @@ namespace Geta.EPi.Commerce.Extensions
         {
             return _linksRepository.Service.GetRelationsByTarget<BundleEntry>(entryContent.ContentLink).Select(r => r.Source);
         }
+
+        /// <summary>
+        /// Get the parent categories
+        /// </summary>
+        /// <param name="entryContent">The entry content</param>
+        /// <param name="linksRepository">The link repository</param>
+        /// <returns>Collection of category content references</returns>
+        public static IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryContent, ILinksRepository linksRepository)
+        {
+            return linksRepository.GetRelationsBySource<NodeRelation>(entryContent.ContentLink).Select(r => r.Target);
+        }
+
+        /// <summary>
+        /// Get the parent categories
+        /// </summary>
+        /// <param name="entryContent">The entry content</param>
+        /// <returns>Collection of category content references</returns>
+        public static IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryContent)
+        {
+            return _linksRepository.Service.GetRelationsBySource<NodeRelation>(entryContent.ContentLink).Select(r => r.Target);
+        }
     }
 }

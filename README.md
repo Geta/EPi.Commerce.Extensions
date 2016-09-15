@@ -30,6 +30,9 @@ IEnumerable<ContentReference> GetPackages(this EntryContentBase entryContent, IL
 
 IEnumerable<ContentReference> GetBundles(this EntryContentBase entryContent);
 IEnumerable<ContentReference> GetBundles(this EntryContentBase entryContent, ILinksRepository linksRepository);
+
+IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryContent);
+IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryContent, ILinksRepository linksRepository);
 ```
 
 ### LineItem
@@ -41,6 +44,13 @@ string thumbnail = lineItem.GetThumbnailUrl();
 Money price = lineItem.PlacedPriceTotal();
 Money discountPrice = lineItem.ExtendedPriceTotal();
 Money placedPriceTotal = lineItem.ToMoney(lineItem.PlacedPrice * lineItem.Quantity);
+```
+
+### Node content
+
+```csharp
+IEnumerable<ContentReference> GetParentCategories(this NodeContent nodeContent);
+IEnumerable<ContentReference> GetParentCategories(this NodeContent nodeContent, ILinksRepository linksRepository)
 ```
 
 ### Package content

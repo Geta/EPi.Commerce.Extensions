@@ -281,6 +281,7 @@
     <Compile Include="BundleContentExtensions.cs" />
     <Compile Include="EntryContentBaseExtensions.cs" />
     <Compile Include="LineItemExtensions.cs" />
+    <Compile Include="NodeContentExtensions.cs" />
     <Compile Include="OrderGroupExtensions.cs" />
     <Compile Include="PackageContentExtensions.cs" />
     <Compile Include="ProductContentExtensions.cs" />
