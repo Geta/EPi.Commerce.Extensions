@@ -18,7 +18,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// </summary>
         /// <param name="bundleContent">The bundle content to use</param>
         /// <param name="linksRepository">The link repository</param>
-        /// <returns></returns>
+        /// <returns>Collection of bundle entry references</returns>
         public static IEnumerable<ContentReference> GetBundleEntries(this BundleContent bundleContent, ILinksRepository linksRepository)
         {
             return linksRepository.GetRelationsBySource<BundleEntry>(bundleContent.ContentLink).Select(r => r.Source);
@@ -28,7 +28,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// Gets all bundle entries for a bundle
         /// </summary>
         /// <param name="bundleContent">The bundle content to use</param>
-        /// <returns></returns>
+        /// <returns>Collection of bundle entry references</returns>
         public static IEnumerable<ContentReference> GetBundleEntries(this BundleContent bundleContent)
         {
             return _linksRepository.Service.GetRelationsBySource<BundleEntry>(bundleContent.ContentLink).Select(r => r.Source);

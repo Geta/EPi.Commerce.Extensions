@@ -18,7 +18,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// </summary>
         /// <param name="productContent">The product</param>
         /// <param name="linksRepository">The links repository</param>
-        /// <returns></returns>
+        /// <returns>Collection of variation references</returns>
         public static IEnumerable<ContentReference> GetVariations(this ProductContent productContent, ILinksRepository linksRepository)
         {
             return linksRepository.GetRelationsBySource<ProductVariation>(productContent.ContentLink).Select(r => r.Source);
@@ -28,7 +28,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// Gets all variants/SKUs for a product
         /// </summary>
         /// <param name="productContent">The product</param>
-        /// <returns></returns>
+        /// <returns>Collection of variation references</returns>
         public static IEnumerable<ContentReference> GetVariations(this ProductContent productContent)
         {
             return _linksRepository.Service.GetRelationsBySource<ProductVariation>(productContent.ContentLink).Select(r => r.Source);

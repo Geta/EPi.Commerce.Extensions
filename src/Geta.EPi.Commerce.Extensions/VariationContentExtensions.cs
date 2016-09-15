@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using EPiServer;
 using EPiServer.Commerce.Catalog.ContentTypes;
 using EPiServer.Commerce.Catalog.Linking;
+using EPiServer.Core;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
+using EPiServer.XForms.WebControls;
 
 namespace Geta.EPi.Commerce.Extensions
 {
@@ -28,6 +31,27 @@ namespace Geta.EPi.Commerce.Extensions
                 urlBuilder.QueryCollection.Add("variationId", variant.Code);
             }
             return urlBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Get the parent products
+        /// </summary>
+        /// <param name="variationContent">The variation content</param>
+        /// <param name="linksRepository">The link repository</param>
+        /// <returns>Collection of product references</returns>
+        public static IEnumerable<ContentReference> GetProducts(this VariationContent variationContent, ILinksRepository linksRepository)
+        {
+            return linksRepository.GetRelationsByTarget<ProductVariation>(variationContent.ContentLink).Select(r => r.Source);
+        }
+
+        /// <summary>
+        /// Get the parent products
+        /// </summary>
+        /// <param name="variationContent">The variation content</param>
+        /// <returns>Collection of product references</returns>
+        public static IEnumerable<ContentReference> GetProducts(this VariationContent variationContent)
+        {
+            return _linksRepository.Service.GetRelationsByTarget<ProductVariation>(variationContent.ContentLink).Select(r => r.Source);
         }
     }
 }

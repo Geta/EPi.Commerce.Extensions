@@ -22,6 +22,16 @@ IEnumerable<ContentReference> GetBundleEntries(this BundleContent bundleContent)
 IEnumerable<ContentReference> GetBundleEntries(this BundleContent bundleContent, ILinksRepository linksRepository);
 ```
 
+### Entry content
+
+```csharp
+IEnumerable<ContentReference> GetPackages(this EntryContentBase entryContent);
+IEnumerable<ContentReference> GetPackages(this EntryContentBase entryContent, ILinksRepository linksRepository);
+
+IEnumerable<ContentReference> GetBundles(this EntryContentBase entryContent);
+IEnumerable<ContentReference> GetBundles(this EntryContentBase entryContent, ILinksRepository linksRepository);
+```
+
 ### LineItem
 
 ```
@@ -51,4 +61,6 @@ IEnumerable<ContentReference> GetVariations(this ProductContent productContent, 
 
 ```
 string url = variant.GetUrl();
+IEnumerable<ContentReference> GetProducts(this VariationContent variationContent, ILinksRepository linksRepository);
+IEnumerable<ContentReference> GetProducts(this VariationContent variationContent);
 ```

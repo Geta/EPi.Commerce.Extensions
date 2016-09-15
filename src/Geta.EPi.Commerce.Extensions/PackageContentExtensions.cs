@@ -18,7 +18,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// </summary>
         /// <param name="packageContent">The package content</param>
         /// <param name="linksRepository">The link repository</param>
-        /// <returns></returns>
+        /// <returns>Collection of package entry references</returns>
         public static IEnumerable<ContentReference> GetPackageEntries(this PackageContent packageContent, ILinksRepository linksRepository)
         {
             return linksRepository.GetRelationsBySource<PackageEntry>(packageContent.ContentLink).Select(r => r.Source);
@@ -28,7 +28,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// Gets package entries for a package
         /// </summary>
         /// <param name="packageContent">The package content</param>
-        /// <returns></returns>
+        /// <returns>Collection of package entry references</returns>
         public static IEnumerable<ContentReference> GetPackageEntries(this PackageContent packageContent)
         {
             return _linksRepository.Service.GetRelationsBySource<PackageEntry>(packageContent.ContentLink).Select(r => r.Source);

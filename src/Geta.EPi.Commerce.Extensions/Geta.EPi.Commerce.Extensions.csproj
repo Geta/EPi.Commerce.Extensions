@@ -279,6 +279,7 @@
   <ItemGroup>
     <Compile Include="AssetContainerExtensions.cs" />
     <Compile Include="BundleContentExtensions.cs" />
+    <Compile Include="EntryContentBaseExtensions.cs" />
     <Compile Include="LineItemExtensions.cs" />
     <Compile Include="OrderGroupExtensions.cs" />
     <Compile Include="PackageContentExtensions.cs" />
