@@ -31,7 +31,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of package references</returns>
         public static IEnumerable<ContentReference> GetPackages(this EntryContentBase entryContent)
         {
-            return _linksRepository.Service.GetRelationsByTarget<PackageEntry>(entryContent.ContentLink).Select(r => r.Source);
+            return entryContent.GetPackages(_linksRepository.Service);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of bundle references</returns>
         public static IEnumerable<ContentReference> GetBundles(this EntryContentBase entryContent)
         {
-            return _linksRepository.Service.GetRelationsByTarget<BundleEntry>(entryContent.ContentLink).Select(r => r.Source);
+            return entryContent.GetBundles(_linksRepository.Service);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of category content references</returns>
         public static IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryContent)
         {
-            return _linksRepository.Service.GetRelationsBySource<NodeRelation>(entryContent.ContentLink).Select(r => r.Target);
+            return entryContent.GetParentCategories(_linksRepository.Service);
         }
     }
 }

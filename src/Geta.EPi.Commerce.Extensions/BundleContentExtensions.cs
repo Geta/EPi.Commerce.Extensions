@@ -31,7 +31,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of bundle entry references</returns>
         public static IEnumerable<ContentReference> GetBundleEntries(this BundleContent bundleContent)
         {
-            return _linksRepository.Service.GetRelationsBySource<BundleEntry>(bundleContent.ContentLink).Select(r => r.Source);
+            return bundleContent.GetBundleEntries(_linksRepository.Service);
         }
     }
 }

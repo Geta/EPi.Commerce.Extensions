@@ -61,11 +61,17 @@ IEnumerable<ContentReference> GetPackageEntries(this PackageContent packageConte
 ```
 
 ### Price detail service
+
+[MSRP](https://en.wikipedia.org/wiki/List_price) (list price/manufacturer's suggested retail price)
+
 ```csharp
 SaveMsrp(this IPriceDetailService priceDetailService, ContentReference contentLink, MarketId marketId, Currency currency, decimal amount);
 ```
 
 ### Price service
+
+[MSRP](https://en.wikipedia.org/wiki/List_price) (list price/manufacturer's suggested retail price)
+
 ```csharp
 IPriceValue LoadMsrp(this IPriceService priceService, ContentReference contentLink, MarketId marketId, Currency currency);
 

@@ -31,7 +31,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of category content references</returns>
         public static IEnumerable<ContentReference> GetParentCategories(this NodeContent nodeContent)
         {
-            return _linksRepository.Service.GetRelationsBySource<NodeRelation>(nodeContent.ContentLink).Select(r => r.Target);
+            return nodeContent.GetParentCategories(_linksRepository.Service);
         }
     }
 }

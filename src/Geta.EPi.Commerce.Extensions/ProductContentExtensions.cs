@@ -31,7 +31,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of variation references</returns>
         public static IEnumerable<ContentReference> GetVariations(this ProductContent productContent)
         {
-            return _linksRepository.Service.GetRelationsBySource<ProductVariation>(productContent.ContentLink).Select(r => r.Source);
+            return productContent.GetVariations(_linksRepository.Service);
         }
     }
 }

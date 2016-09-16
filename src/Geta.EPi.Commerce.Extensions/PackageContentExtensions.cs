@@ -31,7 +31,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of package entry references</returns>
         public static IEnumerable<ContentReference> GetPackageEntries(this PackageContent packageContent)
         {
-            return _linksRepository.Service.GetRelationsBySource<PackageEntry>(packageContent.ContentLink).Select(r => r.Source);
+            return packageContent.GetPackageEntries(_linksRepository.Service);
         }
     }
 }
