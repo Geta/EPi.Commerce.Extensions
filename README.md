@@ -1,8 +1,8 @@
 # Geta.EPi.Commerce.Extensions
 
-![](http://tc.geta.no/app/rest/builds/buildType:(id:TeamFrederik_EPiCommerceExtensions_ExtensionsDebug)/statusIcon)
+![](http://tc.geta.no/app/rest/builds/buildType:(id:TeamFrederik_EPiCommerceExtensions_EPiCommerceExtensionsBuildAndPublishNuGetPack)/statusIcon)
 [![Platform](https://img.shields.io/badge/Platform-.NET 4.5.2-blue.svg?style=flat)](https://msdn.microsoft.com/en-us/library/w0x726c2%28v=vs.110%29.aspx)
-[![Platform](https://img.shields.io/badge/EPiServer%20Commerce-%208.11.2-orange.svg?style=flat)](http://world.episerver.com/cms/)
+[![Platform](https://img.shields.io/badge/Episerver%20Commerce-%2010-orange.svg?style=flat)](http://world.episerver.com/commerce/)
 
 ```
 Install-Package Geta.EPi.Commerce.Extensions
