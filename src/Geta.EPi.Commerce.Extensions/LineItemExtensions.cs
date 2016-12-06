@@ -3,6 +3,7 @@ using System.Web;
 using EPiServer;
 using EPiServer.Commerce.Catalog;
 using EPiServer.Commerce.Catalog.ContentTypes;
+using EPiServer.Commerce.Order;
 using EPiServer.ServiceLocation;
 using Mediachase.Commerce;
 using Mediachase.Commerce.Catalog;
@@ -18,21 +19,21 @@ namespace Geta.EPi.Commerce.Extensions
         private static Injected<ThumbnailUrlResolver> _thumbnailUrlResolver;
 #pragma warning restore 649
 
-        public static string GetUrl(this LineItem lineItem)
+        public static string GetUrl(this ILineItem lineItem)
         {
             var variantLink = _referenceConverter.Service.GetContentLink(lineItem.Code);
             var variant = _contentLoader.Service.Get<VariationContent>(variantLink);
             return variant.GetUrl();
         }
 
-        public static string GetFullUrl(this LineItem lineItem)
+        public static string GetFullUrl(this ILineItem lineItem)
         {
             var rightUrl = lineItem.GetUrl();
             var baseUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
             return new Uri(new Uri(baseUrl), rightUrl).ToString();
         }
 
-        public static string GetThumbnailUrl(this LineItem lineItem)
+        public static string GetThumbnailUrl(this ILineItem lineItem)
         {
             return GetThumbnailUrl(lineItem.Code);
         }
