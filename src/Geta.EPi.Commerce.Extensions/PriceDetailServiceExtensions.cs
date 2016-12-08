@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using EPiServer;
 using EPiServer.Commerce.Catalog.ContentTypes;
 using EPiServer.Core;
@@ -11,6 +13,8 @@ namespace Geta.EPi.Commerce.Extensions
 {
     public static class PriceDetailServiceExtensions
     {
+        private static Injected<IContentRepository> ContentRepository { get; set; }
+
         /// <summary>
         /// Saves the MSRP price
         /// </summary>
@@ -21,9 +25,10 @@ namespace Geta.EPi.Commerce.Extensions
         /// <param name="amount"></param>
         public static void SaveMsrp(this IPriceDetailService priceDetailService, ContentReference contentLink, MarketId marketId, Currency currency, decimal amount)
         {
-            var priceService = ServiceLocator.Current.GetInstance<IPriceService>();
-            var msrp = (PriceDetailValue)priceService.LoadMsrp(contentLink, marketId, currency);
-    
+            int totalCount;
+            var priceFilter = new PriceFilter {Currencies = new List<Currency>() {currency}};
+            var msrp = (PriceDetailValue)priceDetailService.List(contentLink, marketId, priceFilter, 0, int.MaxValue, out totalCount).FirstOrDefault(p => p.UnitPrice.Currency == currency && p.CustomerPricing.PriceTypeId == CustomerPricing.PriceType.PriceGroup && p.CustomerPricing.PriceCode == "MSRP");
+
             if (msrp != null)
             {
                 msrp.UnitPrice = new Money(amount, currency);
@@ -31,8 +36,7 @@ namespace Geta.EPi.Commerce.Extensions
             else
             {
                 msrp = new PriceDetailValue();
-                var contentRepository = ServiceLocator.Current.GetInstance <IContentRepository>();
-                var entryContent = contentRepository.Get<EntryContentBase>(contentLink);
+                var entryContent = ContentRepository.Service.Get<EntryContentBase>(contentLink);
                 msrp.CatalogKey = new CatalogKey(new Guid(entryContent.ApplicationId), entryContent.Code);
                 msrp.CustomerPricing = new CustomerPricing(CustomerPricing.PriceType.PriceGroup, "MSRP");
                 msrp.UnitPrice = new Money(amount, currency);
