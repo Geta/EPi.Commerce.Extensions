@@ -9,15 +9,15 @@ namespace Geta.EPi.Commerce.Extensions
 {
     public static class BundleContentExtensions
     {
-        #pragma warning disable 649
+#pragma warning disable 649
         private static Injected<IRelationRepository> _relationRepository;
-        #pragma warning restore 649
+#pragma warning restore 649
 
         /// <summary>
         /// Gets all bundle entries for a bundle
         /// </summary>
         /// <param name="bundleContent">The bundle content to use</param>
-        /// <param name="relationRepository">The link repository</param>
+        /// <param name="relationRepository">The relation repository</param>
         /// <returns>Collection of bundle entry references</returns>
         public static IEnumerable<ContentReference> GetBundleEntries(this BundleContent bundleContent, IRelationRepository relationRepository)
         {
