@@ -12,19 +12,18 @@ namespace Geta.EPi.Commerce.Extensions
 {
     public static class AssetContainerExtensions
     {
+#pragma warning disable 649
         private static Injected<AssetUrlResolver> _assetUrlResolver;
         private static Injected<UrlResolver> _urlResolver;
         private static Injected<IContentLoader> _contentLoader;
+#pragma warning restore 649
 
         public static string GetDefaultAsset<TContentMedia>(this IAssetContainer assetContainer) where TContentMedia : IContentMedia
         {
             var url = _assetUrlResolver.Service.GetAssetUrl<TContentMedia>(assetContainer);
-            Uri uri;
-            if (Uri.TryCreate(url, UriKind.Absolute, out uri))
-            {
-                return uri.PathAndQuery;
-            }
-            return url;
+            return Uri.TryCreate(url, UriKind.Absolute, out var uri)
+                ? uri.PathAndQuery
+                : url;
         }
 
         public static IList<string> GetAssets<TContentMedia>(this IAssetContainer assetContainer) where TContentMedia : IContentMedia
@@ -32,7 +31,11 @@ namespace Geta.EPi.Commerce.Extensions
             var assets = new List<string>();
             if (assetContainer.CommerceMediaCollection != null)
             {
-                assets.AddRange(assetContainer.CommerceMediaCollection.Where(x => ValidateCorrectType<TContentMedia>(x.AssetLink)).Select(media => _urlResolver.Service.GetUrl(media.AssetLink)));
+                assets.AddRange(
+                    assetContainer
+                        .CommerceMediaCollection
+                        .Where(x => ValidateCorrectType<TContentMedia>(x.AssetLink))
+                        .Select(media => _urlResolver.Service.GetUrl(media.AssetLink)));
             }
 
             if (!assets.Any())
@@ -50,13 +53,8 @@ namespace Geta.EPi.Commerce.Extensions
                 return true;
             }
 
-            if (ContentReference.IsNullOrEmpty(contentLink))
-            {
-                return false;
-            }
-
-            TContentMedia content;
-            return _contentLoader.Service.TryGet(contentLink, out content);
+            return !ContentReference.IsNullOrEmpty(contentLink)
+                && _contentLoader.Service.TryGet(contentLink, out TContentMedia _);
         }
     }
 }
