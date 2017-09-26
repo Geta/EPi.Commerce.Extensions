@@ -10,18 +10,18 @@ namespace Geta.EPi.Commerce.Extensions
     public static class PackageContentExtensions
     {
         #pragma warning disable 649
-        private static Injected<ILinksRepository> _linksRepository;
+        private static Injected<IRelationRepository> _relationRepository;
         #pragma warning restore 649
 
         /// <summary>
         /// Gets package entries for a package
         /// </summary>
         /// <param name="packageContent">The package content</param>
-        /// <param name="linksRepository">The link repository</param>
+        /// <param name="relationRepository">The relation repository</param>
         /// <returns>Collection of package entry references</returns>
-        public static IEnumerable<ContentReference> GetPackageEntries(this PackageContent packageContent, ILinksRepository linksRepository)
+        public static IEnumerable<ContentReference> GetPackageEntries(this PackageContent packageContent, IRelationRepository relationRepository)
         {
-            return linksRepository.GetRelationsBySource<PackageEntry>(packageContent.ContentLink).Select(r => r.Source);
+            return relationRepository.GetChildren<PackageEntry>(packageContent.ContentLink).Select(r => r.Child);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of package entry references</returns>
         public static IEnumerable<ContentReference> GetPackageEntries(this PackageContent packageContent)
         {
-            return packageContent.GetPackageEntries(_linksRepository.Service);
+            return packageContent.GetPackageEntries(_relationRepository.Service);
         }
     }
 }
