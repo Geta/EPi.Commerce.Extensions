@@ -9,19 +9,19 @@ namespace Geta.EPi.Commerce.Extensions
 {
     public static class BundleContentExtensions
     {
-        #pragma warning disable 649
-        private static Injected<ILinksRepository> _linksRepository;
-        #pragma warning restore 649
+#pragma warning disable 649
+        private static Injected<IRelationRepository> _relationRepository;
+#pragma warning restore 649
 
         /// <summary>
         /// Gets all bundle entries for a bundle
         /// </summary>
         /// <param name="bundleContent">The bundle content to use</param>
-        /// <param name="linksRepository">The link repository</param>
+        /// <param name="relationRepository">The relation repository</param>
         /// <returns>Collection of bundle entry references</returns>
-        public static IEnumerable<ContentReference> GetBundleEntries(this BundleContent bundleContent, ILinksRepository linksRepository)
+        public static IEnumerable<ContentReference> GetBundleEntries(this BundleContent bundleContent, IRelationRepository relationRepository)
         {
-            return linksRepository.GetRelationsBySource<BundleEntry>(bundleContent.ContentLink).Select(r => r.Source);
+            return relationRepository.GetChildren<BundleEntry>(bundleContent.ContentLink).Select(r => r.Child);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of bundle entry references</returns>
         public static IEnumerable<ContentReference> GetBundleEntries(this BundleContent bundleContent)
         {
-            return bundleContent.GetBundleEntries(_linksRepository.Service);
+            return bundleContent.GetBundleEntries(_relationRepository.Service);
         }
     }
 }

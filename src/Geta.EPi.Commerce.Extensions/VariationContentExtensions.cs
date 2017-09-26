@@ -6,7 +6,6 @@ using EPiServer.Commerce.Catalog.Linking;
 using EPiServer.Core;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
-using EPiServer.XForms.WebControls;
 
 namespace Geta.EPi.Commerce.Extensions
 {
@@ -14,12 +13,12 @@ namespace Geta.EPi.Commerce.Extensions
     {
 #pragma warning disable 649
         private static Injected<UrlResolver> _urlResolver;
-        private static Injected<ILinksRepository> _linksRepository;
+        private static Injected<IRelationRepository> _relationRepository;
 #pragma warning restore 649
 
         public static string GetUrl(this VariationContent variant)
         {
-            var productLink = variant.GetParentProducts(_linksRepository.Service).FirstOrDefault();
+            var productLink = variant.GetParentProducts(_relationRepository.Service).FirstOrDefault();
             if (productLink == null)
             {
                 return string.Empty;
@@ -37,11 +36,11 @@ namespace Geta.EPi.Commerce.Extensions
         /// Get the parent products
         /// </summary>
         /// <param name="variationContent">The variation content</param>
-        /// <param name="linksRepository">The link repository</param>
+        /// <param name="relationRepository">The relation repository</param>
         /// <returns>Collection of product references</returns>
-        public static IEnumerable<ContentReference> GetProducts(this VariationContent variationContent, ILinksRepository linksRepository)
+        public static IEnumerable<ContentReference> GetProducts(this VariationContent variationContent, IRelationRepository relationRepository)
         {
-            return linksRepository.GetRelationsByTarget<ProductVariation>(variationContent.ContentLink).Select(r => r.Source);
+            return relationRepository.GetParents<ProductVariation>(variationContent.ContentLink).Select(r => r.Parent);
         }
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of product references</returns>
         public static IEnumerable<ContentReference> GetProducts(this VariationContent variationContent)
         {
-            return variationContent.GetProducts(_linksRepository.Service);
+            return variationContent.GetProducts(_relationRepository.Service);
         }
     }
 }

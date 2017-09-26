@@ -10,18 +10,18 @@ namespace Geta.EPi.Commerce.Extensions
     public static class NodeContentExtensions
     {
 #pragma warning disable 649
-        private static Injected<ILinksRepository> _linksRepository;
+        private static Injected<IRelationRepository> _relationRepository;
 #pragma warning restore 649
 
         /// <summary>
         /// Get the parent categories
         /// </summary>
         /// <param name="nodeContent">The node content</param>
-        /// <param name="linksRepository">The link repository</param>
+        /// <param name="relationRepository">The relation repository</param>
         /// <returns>Collection of category content references</returns>
-        public static IEnumerable<ContentReference> GetParentCategories(this NodeContent nodeContent, ILinksRepository linksRepository)
+        public static IEnumerable<ContentReference> GetParentCategories(this NodeContent nodeContent, IRelationRepository relationRepository)
         {
-            return linksRepository.GetRelationsBySource<NodeRelation>(nodeContent.ContentLink).Select(r => r.Target);
+            return relationRepository.GetParents<NodeRelation>(nodeContent.ContentLink).Select(r => r.Parent);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of category content references</returns>
         public static IEnumerable<ContentReference> GetParentCategories(this NodeContent nodeContent)
         {
-            return nodeContent.GetParentCategories(_linksRepository.Service);
+            return nodeContent.GetParentCategories(_relationRepository.Service);
         }
     }
 }

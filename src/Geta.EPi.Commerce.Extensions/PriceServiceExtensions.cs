@@ -13,6 +13,10 @@ namespace Geta.EPi.Commerce.Extensions
 {
     public static class PriceServiceExtensions
     {
+#pragma warning disable 649
+        private static Injected<IContentRepository> _contentRepository;
+#pragma warning restore 649
+
         /// <summary>
         /// Get's the MSRP price
         /// </summary>
@@ -25,11 +29,14 @@ namespace Geta.EPi.Commerce.Extensions
         {
             var contentRepository = ServiceLocator.Current.GetInstance <IContentRepository>();
             var entryContent = contentRepository.Get<EntryContentBase>(contentLink);
-            var catalogKey = new CatalogKey(new Guid(entryContent.ApplicationId), entryContent.Code);
-            var priceFilter = new PriceFilter();
-            priceFilter.Currencies = new List<Currency>() { currency };
+            var catalogKey = new CatalogKey(entryContent.Code);
+            var priceFilter = new PriceFilter {Currencies = new List<Currency> {currency}};
 
-            return priceService.GetPrices(marketId, DateTime.UtcNow, catalogKey, priceFilter).FirstOrDefault(p => p.CustomerPricing.PriceTypeId == CustomerPricing.PriceType.PriceGroup && p.CustomerPricing.PriceCode == "MSRP");
+            return priceService
+                .GetPrices(marketId, DateTime.UtcNow, catalogKey, priceFilter)
+                .FirstOrDefault(
+                    p => p.CustomerPricing.PriceTypeId == CustomerPricing.PriceType.PriceGroup
+                        && p.CustomerPricing.PriceCode == "MSRP");
         }
 
         /// <summary>
@@ -42,21 +49,25 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns></returns>
         public static IPriceValue GetPreviousPrice(this IPriceService priceService, ContentReference contentLink, MarketId marketId, Currency currency)
         {
-            var contentRepository = ServiceLocator.Current.GetInstance < IContentRepository>();
-            var entryContent = contentRepository.Get<EntryContentBase>(contentLink);
-            var catalogKey = new CatalogKey(new Guid(entryContent.ApplicationId), entryContent.Code);
-            var priceFilter = new PriceFilter();
-            priceFilter.Currencies = new List<Currency>() { currency };
-            var prices = priceService.GetCatalogEntryPrices(catalogKey);
-            var previousPrice = prices.FirstOrDefault(p => p.MarketId == marketId && p.UnitPrice.Currency == currency && p.ValidUntil.HasValue && p.ValidUntil.Value < DateTime.UtcNow);
-            var currentPrice = prices.FirstOrDefault(p => p.MarketId == marketId && p.UnitPrice.Currency == currency && p.ValidFrom < DateTime.UtcNow && (!p.ValidUntil.HasValue || p.ValidUntil.Value > DateTime.UtcNow));
+            var entryContent = _contentRepository.Service.Get<EntryContentBase>(contentLink);
+            var catalogKey = new CatalogKey(entryContent.Code);
+            var prices = priceService.GetCatalogEntryPrices(catalogKey).ToList();
+            var previousPrice = prices
+                .FirstOrDefault(
+                    p => p.MarketId == marketId
+                        && p.UnitPrice.Currency == currency
+                        && p.ValidUntil.HasValue
+                        && p.ValidUntil.Value < DateTime.UtcNow);
+            var currentPrice = prices
+                .FirstOrDefault(
+                    p => p.MarketId == marketId
+                        && p.UnitPrice.Currency == currency
+                        && p.ValidFrom < DateTime.UtcNow
+                        && (!p.ValidUntil.HasValue || p.ValidUntil.Value > DateTime.UtcNow));
 
-            if (previousPrice.UnitPrice.Amount<currentPrice.UnitPrice.Amount)
-            {
-                return previousPrice;
-            }
-
-            return currentPrice;
+            return previousPrice?.UnitPrice.Amount < currentPrice?.UnitPrice.Amount
+                ? previousPrice
+                : currentPrice;
         }
     }
 }

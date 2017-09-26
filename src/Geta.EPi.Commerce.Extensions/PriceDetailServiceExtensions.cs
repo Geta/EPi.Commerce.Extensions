@@ -13,7 +13,9 @@ namespace Geta.EPi.Commerce.Extensions
 {
     public static class PriceDetailServiceExtensions
     {
-        private static Injected<IContentRepository> ContentRepository { get; set; }
+#pragma warning disable 649
+        private static Injected<IContentRepository> _contentRepository;
+#pragma warning restore 649
 
         /// <summary>
         /// Saves the MSRP price
@@ -23,11 +25,16 @@ namespace Geta.EPi.Commerce.Extensions
         /// <param name="marketId"></param>
         /// <param name="currency"></param>
         /// <param name="amount"></param>
-        public static void SaveMsrp(this IPriceDetailService priceDetailService, ContentReference contentLink, MarketId marketId, Currency currency, decimal amount)
+        public static void SaveMsrp(
+            this IPriceDetailService priceDetailService, ContentReference contentLink, MarketId marketId, Currency currency, decimal amount)
         {
-            int totalCount;
-            var priceFilter = new PriceFilter {Currencies = new List<Currency>() {currency}};
-            var msrp = (PriceDetailValue)priceDetailService.List(contentLink, marketId, priceFilter, 0, int.MaxValue, out totalCount).FirstOrDefault(p => p.UnitPrice.Currency == currency && p.CustomerPricing.PriceTypeId == CustomerPricing.PriceType.PriceGroup && p.CustomerPricing.PriceCode == "MSRP");
+            var priceFilter = new PriceFilter {Currencies = new List<Currency> {currency}};
+            var msrp = (PriceDetailValue)priceDetailService
+                .List(contentLink, marketId, priceFilter, 0, int.MaxValue, out _)
+                .FirstOrDefault(
+                    p => p.UnitPrice.Currency == currency
+                        && p.CustomerPricing.PriceTypeId == CustomerPricing.PriceType.PriceGroup
+                        && p.CustomerPricing.PriceCode == "MSRP");
 
             if (msrp != null)
             {
@@ -36,13 +43,13 @@ namespace Geta.EPi.Commerce.Extensions
             else
             {
                 msrp = new PriceDetailValue();
-                var entryContent = ContentRepository.Service.Get<EntryContentBase>(contentLink);
-                msrp.CatalogKey = new CatalogKey(new Guid(entryContent.ApplicationId), entryContent.Code);
+                var entryContent = _contentRepository.Service.Get<EntryContentBase>(contentLink);
+                msrp.CatalogKey = new CatalogKey(entryContent.Code);
                 msrp.CustomerPricing = new CustomerPricing(CustomerPricing.PriceType.PriceGroup, "MSRP");
                 msrp.UnitPrice = new Money(amount, currency);
                 msrp.MarketId = marketId;
                 msrp.MinQuantity = 0;
-                msrp.ValidFrom = entryContent.StartPublish.Value;
+                msrp.ValidFrom = entryContent.StartPublish ?? DateTime.MinValue;
             }
 
             priceDetailService.Save(msrp);

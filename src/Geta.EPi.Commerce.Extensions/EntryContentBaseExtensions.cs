@@ -10,18 +10,18 @@ namespace Geta.EPi.Commerce.Extensions
     public static class EntryContentBaseExtensions
     {
 #pragma warning disable 649
-        private static Injected<ILinksRepository> _linksRepository;
+        private static Injected<IRelationRepository> _relationRepository;
 #pragma warning restore 649
 
         /// <summary>
         /// Get the parent packages
         /// </summary>
         /// <param name="entryContent">The entry content</param>
-        /// <param name="linksRepository">The link repository</param>
+        /// <param name="relationRepository">The relation repository</param>
         /// <returns>Collection of package references</returns>
-        public static IEnumerable<ContentReference> GetPackages(this EntryContentBase entryContent, ILinksRepository linksRepository)
+        public static IEnumerable<ContentReference> GetPackages(this EntryContentBase entryContent, IRelationRepository relationRepository)
         {
-            return linksRepository.GetRelationsByTarget<PackageEntry>(entryContent.ContentLink).Select(r => r.Source);
+            return relationRepository.GetParents<PackageEntry>(entryContent.ContentLink).Select(r => r.Parent);
         }
 
         /// <summary>
@@ -31,18 +31,18 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of package references</returns>
         public static IEnumerable<ContentReference> GetPackages(this EntryContentBase entryContent)
         {
-            return entryContent.GetPackages(_linksRepository.Service);
+            return entryContent.GetPackages(_relationRepository.Service);
         }
 
         /// <summary>
         /// Get the parent bundles
         /// </summary>
         /// <param name="entryContent">The entry content</param>
-        /// <param name="linksRepository">The link repository</param>
+        /// <param name="relationRepository">The relation repository</param>
         /// <returns>Collection of bundle references</returns>
-        public static IEnumerable<ContentReference> GetBundles(this EntryContentBase entryContent, ILinksRepository linksRepository)
+        public static IEnumerable<ContentReference> GetBundles(this EntryContentBase entryContent, IRelationRepository relationRepository)
         {
-            return linksRepository.GetRelationsByTarget<BundleEntry>(entryContent.ContentLink).Select(r => r.Source);
+            return relationRepository.GetParents<BundleEntry>(entryContent.ContentLink).Select(r => r.Parent);
         }
 
         /// <summary>
@@ -52,18 +52,18 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of bundle references</returns>
         public static IEnumerable<ContentReference> GetBundles(this EntryContentBase entryContent)
         {
-            return entryContent.GetBundles(_linksRepository.Service);
+            return entryContent.GetBundles(_relationRepository.Service);
         }
 
         /// <summary>
         /// Get the parent categories
         /// </summary>
         /// <param name="entryContent">The entry content</param>
-        /// <param name="linksRepository">The link repository</param>
+        /// <param name="relationRepository">The relation repository</param>
         /// <returns>Collection of category content references</returns>
-        public static IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryContent, ILinksRepository linksRepository)
+        public static IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryContent, IRelationRepository relationRepository)
         {
-            return linksRepository.GetRelationsBySource<NodeRelation>(entryContent.ContentLink).Select(r => r.Target);
+            return relationRepository.GetParents<NodeRelation>(entryContent.ContentLink).Select(r => r.Parent);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Geta.EPi.Commerce.Extensions
         /// <returns>Collection of category content references</returns>
         public static IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryContent)
         {
-            return entryContent.GetParentCategories(_linksRepository.Service);
+            return entryContent.GetParentCategories(_relationRepository.Service);
         }
     }
 }
