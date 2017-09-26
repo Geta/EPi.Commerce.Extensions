@@ -17,11 +17,11 @@ namespace Geta.EPi.Commerce.Extensions
         /// Get the parent categories
         /// </summary>
         /// <param name="nodeContent">The node content</param>
-        /// <param name="linksRepository">The link repository</param>
+        /// <param name="relationRepository">The relation repository</param>
         /// <returns>Collection of category content references</returns>
-        public static IEnumerable<ContentReference> GetParentCategories(this NodeContent nodeContent, IRelationRepository linksRepository)
+        public static IEnumerable<ContentReference> GetParentCategories(this NodeContent nodeContent, IRelationRepository relationRepository)
         {
-            return linksRepository.GetParents<NodeRelation>(nodeContent.ContentLink).Select(r => r.Parent);
+            return relationRepository.GetParents<NodeRelation>(nodeContent.ContentLink).Select(r => r.Parent);
         }
 
         /// <summary>
