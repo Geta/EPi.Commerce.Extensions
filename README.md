@@ -2,7 +2,7 @@
 
 ![](http://tc.geta.no/app/rest/builds/buildType:(id:TeamFrederik_EPiCommerceExtensions_EPiCommerceExtensionsBuildAndPublishNuGetPack)/statusIcon)
 [![Platform](https://img.shields.io/badge/Platform-.NET%204.5.2-blue.svg?style=flat)](https://msdn.microsoft.com/en-us/library/w0x726c2%28v=vs.110%29.aspx)
-[![Platform](https://img.shields.io/badge/Episerver%20Commerce-%2010-orange.svg?style=flat)](http://world.episerver.com/commerce/)
+[![Platform](https://img.shields.io/badge/Episerver%20Commerce-%2011-orange.svg?style=flat)](http://world.episerver.com/commerce/)
 
 ```
 Install-Package Geta.EPi.Commerce.Extensions
@@ -21,20 +21,20 @@ IEnumerable<string> images = variation.GetAssets<IContentImage>();
 
 ```csharp
 IEnumerable<ContentReference> GetBundleEntries(this BundleContent bundleContent);
-IEnumerable<ContentReference> GetBundleEntries(this BundleContent bundleContent, ILinksRepository linksRepository);
+IEnumerable<ContentReference> GetBundleEntries(this BundleContent bundleContent, IRelationRepository relationRepository);
 ```
 
 ### Entry content
 
 ```csharp
 IEnumerable<ContentReference> GetPackages(this EntryContentBase entryContent);
-IEnumerable<ContentReference> GetPackages(this EntryContentBase entryContent, ILinksRepository linksRepository);
+IEnumerable<ContentReference> GetPackages(this EntryContentBase entryContent, IRelationRepository relationRepository);
 
 IEnumerable<ContentReference> GetBundles(this EntryContentBase entryContent);
-IEnumerable<ContentReference> GetBundles(this EntryContentBase entryContent, ILinksRepository linksRepository);
+IEnumerable<ContentReference> GetBundles(this EntryContentBase entryContent, IRelationRepository relationRepository);
 
 IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryContent);
-IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryContent, ILinksRepository linksRepository);
+IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryContent, IRelationRepository relationRepository);
 ```
 
 ### LineItem
@@ -43,23 +43,20 @@ IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryCon
 string url = lineItem.GetUrl();
 string fullUrl = lineItem.GetFullUrl();
 string thumbnail = lineItem.GetThumbnailUrl();
-Money price = lineItem.PlacedPriceTotal();
-Money discountPrice = lineItem.ExtendedPriceTotal();
-Money placedPriceTotal = lineItem.ToMoney(lineItem.PlacedPrice * lineItem.Quantity);
 ```
 
 ### Node content
 
 ```csharp
 IEnumerable<ContentReference> GetParentCategories(this NodeContent nodeContent);
-IEnumerable<ContentReference> GetParentCategories(this NodeContent nodeContent, ILinksRepository linksRepository)
+IEnumerable<ContentReference> GetParentCategories(this NodeContent nodeContent, IRelationRepository relationRepository)
 ```
 
 ### Package content
 
 ```csharp
 IEnumerable<ContentReference> GetPackageEntries(this PackageContent packageContent);
-IEnumerable<ContentReference> GetPackageEntries(this PackageContent packageContent, ILinksRepository linksRepository);
+IEnumerable<ContentReference> GetPackageEntries(this PackageContent packageContent, IRelationRepository relationRepository);
 ```
 
 ### Price detail service
@@ -85,13 +82,13 @@ IPriceValue GetPreviousPrice(this IPriceService priceService, ContentReference c
 
 ```csharp
 IEnumerable<ContentReference> GetVariations(this ProductContent productContent);
-IEnumerable<ContentReference> GetVariations(this ProductContent productContent, ILinksRepository linksRepository);
+IEnumerable<ContentReference> GetVariations(this ProductContent productContent, IRelationRepository relationRepository);
 ```
 
 ### VariantContent
 
 ```
 string url = variant.GetUrl();
-IEnumerable<ContentReference> GetProducts(this VariationContent variationContent, ILinksRepository linksRepository);
+IEnumerable<ContentReference> GetProducts(this VariationContent variationContent, IRelationRepository relationRepository);
 IEnumerable<ContentReference> GetProducts(this VariationContent variationContent);
 ```
