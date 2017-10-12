@@ -12,7 +12,7 @@ Install-Package Geta.EPi.Commerce.Extensions
 
 ### Asset
 
-```
+```csharp
 string image = variant.GetDefaultAsset<IContentImage>();
 IEnumerable<string> images = variation.GetAssets<IContentImage>();
 ```
@@ -39,7 +39,7 @@ IEnumerable<ContentReference> GetParentCategories(this EntryContentBase entryCon
 
 ### LineItem
 
-```
+```csharp
 string url = lineItem.GetUrl();
 string fullUrl = lineItem.GetFullUrl();
 string thumbnail = lineItem.GetThumbnailUrl();
@@ -87,7 +87,7 @@ IEnumerable<ContentReference> GetVariations(this ProductContent productContent, 
 
 ### VariantContent
 
-```
+```csharp
 string url = variant.GetUrl();
 IEnumerable<ContentReference> GetProducts(this VariationContent variationContent, IRelationRepository relationRepository);
 IEnumerable<ContentReference> GetProducts(this VariationContent variationContent);
