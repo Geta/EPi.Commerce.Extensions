@@ -6,9 +6,7 @@ using EPiServer.Commerce.Catalog.ContentTypes;
 using EPiServer.Commerce.Order;
 using EPiServer.Core;
 using EPiServer.ServiceLocation;
-using Mediachase.Commerce;
 using Mediachase.Commerce.Catalog;
-using Mediachase.Commerce.Orders;
 
 namespace Geta.EPi.Commerce.Extensions
 {
@@ -54,30 +52,6 @@ namespace Geta.EPi.Commerce.Extensions
             var content = _contentLoader.Service.Get<VariationContent>(link);
             if (content == null) return string.Empty;
             return _thumbnailUrlResolver.Service.GetThumbnailUrl(content, "thumbnail");
-        }
-
-        public static Money PlacedPriceTotal(this LineItem lineItem)
-        {
-            return lineItem.ToMoney(lineItem.PlacedPrice * lineItem.Quantity);
-        }
-
-        /// <summary>
-        /// Gets the amount of a line item with all line item discounts subtracted.
-        /// </summary>
-        /// <param name="lineItem">The line item holding the amount.</param>
-        /// <returns>the extended price with any order level amounts excluded.</returns>
-        /// <remarks>If an order contains order level discounts then that amount will be divided on the line items and included in the extended price.
-        /// This is not always desired. This method shows the extended price for a line item including 
-        /// line item discounts, but without involving any order level discounts.
-        /// </remarks>
-        public static Money ExtendedPriceTotal(this LineItem lineItem)
-        {
-            return lineItem.ToMoney(lineItem.ExtendedPrice + lineItem.OrderLevelDiscountAmount);
-        }
-
-        public static Money ToMoney(this LineItem lineItem, decimal amount)
-        {
-            return lineItem.Parent.Parent.ToMoney(amount);
         }
     }
 }
