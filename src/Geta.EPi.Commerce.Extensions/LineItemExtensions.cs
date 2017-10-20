@@ -6,6 +6,7 @@ using EPiServer.Commerce.Catalog.ContentTypes;
 using EPiServer.Commerce.Order;
 using EPiServer.Core;
 using EPiServer.ServiceLocation;
+using EPiServer.Web.Routing;
 using Mediachase.Commerce.Catalog;
 
 namespace Geta.EPi.Commerce.Extensions
@@ -13,6 +14,7 @@ namespace Geta.EPi.Commerce.Extensions
     public static class LineItemExtensions
     {
 #pragma warning disable 649
+        private static Injected<UrlResolver> _urlResolver;
         private static Injected<ReferenceConverter> _referenceConverter;
         private static Injected<IContentLoader> _contentLoader;
         private static Injected<ThumbnailUrlResolver> _thumbnailUrlResolver;
@@ -25,8 +27,11 @@ namespace Geta.EPi.Commerce.Extensions
             {
                 return string.Empty;
             }
-            var variant = _contentLoader.Service.Get<VariationContent>(link);
-            return variant?.GetUrl() ?? string.Empty;
+
+            var entry = _contentLoader.Service.Get<EntryContentBase>(link);
+            var variant = entry as VariationContent;
+
+            return variant?.GetUrl() ?? _urlResolver.Service.GetUrl(entry.ContentLink) ?? string.Empty;
         }
 
         public static string GetFullUrl(this ILineItem lineItem)
@@ -49,7 +54,7 @@ namespace Geta.EPi.Commerce.Extensions
             {
                 return string.Empty;
             }
-            var content = _contentLoader.Service.Get<VariationContent>(link);
+            var content = _contentLoader.Service.Get<EntryContentBase>(link);
             if (content == null) return string.Empty;
             return _thumbnailUrlResolver.Service.GetThumbnailUrl(content, "thumbnail");
         }
