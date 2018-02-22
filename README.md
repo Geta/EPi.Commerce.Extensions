@@ -4,6 +4,10 @@
 [![Platform](https://img.shields.io/badge/Platform-.NET%204.6.1-blue.svg?style=flat)](https://msdn.microsoft.com/en-us/library/w0x726c2%28v=vs.110%29.aspx)
 [![Platform](https://img.shields.io/badge/Episerver%20Commerce-%2011-orange.svg?style=flat)](http://world.episerver.com/commerce/)
 
+## Description
+
+Helpers and extension methods for Episerver Commerce.
+
 ```
 Install-Package Geta.EPi.Commerce.Extensions
 ```
@@ -92,3 +96,6 @@ string url = variant.GetUrl();
 IEnumerable<ContentReference> GetProducts(this VariationContent variationContent, IRelationRepository relationRepository);
 IEnumerable<ContentReference> GetProducts(this VariationContent variationContent);
 ```
+
+## Package maintainer 
+https://github.com/frederikvig
