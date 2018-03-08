@@ -12,6 +12,22 @@ Helpers and extension methods for Episerver Commerce.
 Install-Package Geta.EPi.Commerce.Extensions
 ```
 
+## Features
+
+#### Extension methods for:
+* **EPiServer.Commerce.Catalog.ContentTypes.IAssetContainer** - *get assets of Episerver's default group*
+* **EPiServer.Commerce.Catalog.ContentTypes.BundleContent** - *gets all bundle entries for a bundle*
+* **EPiServer.Commerce.Catalog.ContentTypes.EntryContentBase** - *gets the parent packages, bundles and categories*
+* **EPiServer.Commerce.Order.ILineItem** - *gets Url, FullUrl and Thumbnailurl of an EPiServer.Commerce.Catalog.ContentTypes.EntryContentBase*
+* **EPiServer.Commerce.Catalog.ContentTypes** - *gets the parent categories*
+* **EPiServer.Commerce.Order.IOrderGroup** - *converts decimal to Mediachase.Commerce.Money*
+* **EPiServer.Commerce.Catalog.ContentTypes.PackageContent** - *gets package entries for a package*
+* **Mediachase.Commerce.Pricing.IPriceDetailService** - *saves the MSRP price*
+* **Mediachase.Commerce.Pricing.IPriceService** - *gets the previous price and load the Msrp.*
+* **EPiServer.Commerce.Catalog.ContentTypes.ProductContent** - *gets all variants/SKUs for a product*
+* **EPiServer.Commerce.Catalog.ContentTypes.VariationContent** - *get the url and parent products*
+
+
 ## Examples
 
 ### Asset
