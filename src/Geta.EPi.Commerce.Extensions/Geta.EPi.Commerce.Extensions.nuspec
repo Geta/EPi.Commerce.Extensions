@@ -10,8 +10,5 @@
     <description>$description$</description>
     <tags>Geta Foundation Commerce</tags>
     <iconUrl>http://cdn.geta.no/opensource/icons/geta-epi-icon.png</iconUrl>
-    <dependencies>
-        <dependency id="EPiServer.Commerce.Core" version="[11.5,12.0]" />
-    </dependencies>
   </metadata>
 </package>
