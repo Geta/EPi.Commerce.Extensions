@@ -228,6 +228,7 @@
   <ItemGroup>
     <Compile Include="AssetContainerExtensions.cs" />
     <Compile Include="BundleContentExtensions.cs" />
+    <Compile Include="CartExtensions.cs" />
     <Compile Include="EntryContentBaseExtensions.cs" />
     <Compile Include="LineItemExtensions.cs" />
     <Compile Include="NodeContentExtensions.cs" />
