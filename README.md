@@ -66,11 +66,11 @@ string thumbnail = lineItem.GetThumbnailUrl();
 ```
 
 ## Cart
+
 ```csharp
 void AddValidationIssues(this Dictionary<ILineItem, List<ValidationIssue>> issues, ILineItem lineItem, ValidationIssue issue);
 bool HasItemBeenRemoved(this Dictionary<ILineItem, List<ValidationIssue>> issuesPerLineItem, ILineItem lineItem);
 ```
-
 
 ### Node content
 
