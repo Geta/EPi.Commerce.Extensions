@@ -2,11 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.2.0]
+
+### Added
+
+- Cart extensions.
+
 ## [3.0.1, 3.0.2]
 
 ### Added
-* Created CHANGELOG.md
+
+- Created CHANGELOG.md
 
 ### Changed
-* Added features to readme.md
+
+- Added features to readme.md
 
