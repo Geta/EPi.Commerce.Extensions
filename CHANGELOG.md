@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.0]
+
+### Changed
+
+- Upgraded to Commerce 13.
+
 ## [3.2.0]
 
 ### Added
