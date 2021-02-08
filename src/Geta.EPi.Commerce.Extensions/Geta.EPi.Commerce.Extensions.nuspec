@@ -10,5 +10,6 @@
     <description>$description$</description>
     <tags>Geta Foundation Commerce</tags>
     <iconUrl>http://cdn.geta.no/opensource/icons/geta-epi-icon.png</iconUrl>
+    <repository type="git" url="URL" branch="BRANCH_NAME" commit="COMMIT" />
   </metadata>
 </package>
